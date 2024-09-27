@@ -13,27 +13,27 @@ const Sidebar = ({ user }) => {
                 </div>
                 <ul className=" w-full flex flex-col ">
                     <Link to="/dashboard/profile" className="">
-                        <li className=' w-full text-center py-4 px-2 text-xl border-b-2 border-[#697565] hover:bg-[#697565] '>
+                        <li className=' w-full text-center py-4 px-5 text-xl border-b-2 border-[#697565] hover:bg-[#697565] '>
                             <img src={home} alt='deposit' width={30} />
                         </li>
                     </Link>
                     <Link to="/dashboard/deposit" className="">
-                        <li className=' w-full text-center py-4 px-2 text-xl  border-b-2 border-[#697565] hover:bg-[#697565] '>
+                        <li className=' w-full text-center py-4 px-5 text-xl  border-b-2 border-[#697565] hover:bg-[#697565] '>
                             <img src={deposit} alt='deposit' width={30} />
                         </li>
                     </Link>
                     <Link to="/dashboard/transfer" className="">
-                        <li className=' w-full text-center py-4 px-2 text-xl  border-b-2 border-[#697565] hover:bg-[#697565]'>
+                        <li className=' w-full text-center py-4 px-5 text-xl  border-b-2 border-[#697565] hover:bg-[#697565]'>
                             <img src={transfer} alt='deposit' width={30} />
                         </li>
                     </Link>
                     <Link to="/dashboard/withdraw" className="">
-                        <li className=' w-full text-center py-4 px-2 text-xl  border-b-2 border-[#697565] hover:bg-[#697565]'>
+                        <li className=' w-full text-center py-4 px-5 text-xl  border-b-2 border-[#697565] hover:bg-[#697565]'>
                             <img src={withdraw} alt='deposit' width={30} />
                         </li>
                     </Link>
                     <Link to="/dashboard/transactions" className="">
-                        <li className=' w-full text-center py-4 px-2 text-xl  border-b-2 border-[#697565] hover:bg-[#697565]'>
+                        <li className=' w-full text-center py-4 px-5 text-xl  border-b-2 border-[#697565] hover:bg-[#697565]'>
                             <img src={transactions} alt='deposit' width={30} />
 
                         </li>

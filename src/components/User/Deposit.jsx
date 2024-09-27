@@ -10,7 +10,6 @@ import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
 const Deposit = () => {
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [profileDocument, setProfileDocument] = useState([]);
     // Initial form values
     const initialValues = {
         depositAmount: '',
@@ -28,26 +27,31 @@ const Deposit = () => {
     // Form submission handler
     const onSubmit = async (values, { setSubmitting, resetForm }) => {
         const depositAmount = values.depositAmount;
+        console.log(depositAmount);
         try {
             const user = await account.get();
             const userId = user.$id;
-            const profileResponse = await databases.listDocuments(
-                '66e4443f003bfa937d45',              // Your database ID
-                '66e58919001f63dd5d2f',              // Your profile collection ID
-                [Query.equal('id', userId)]       // Query to find the document by userId
-            );
 
-            // Step 2: Ensure a document is found
+            const profileResponse = await databases.listDocuments(
+                '66e4443f003bfa937d45',
+                '66e58919001f63dd5d2f',
+                [Query.equal('id', userId)]
+            );
             if (profileResponse.documents.length === 0) {
                 throw new Error('Create Your profile');
             }
             const profile1 = profileResponse.documents[0]
-            setProfileDocument(profile1); // Assuming there's only one profile per user
-            const profileDocumentId = profileDocument.$id;         // Get the document ID
-            if (!profileDocument) {
+            const profileDocumentId = profile1.$id;
+            if (!profile1) {
                 return setErrorMessage("Create your profile");
             }
-            // Prepare the transaction data for deposit
+            await databases.updateDocument(
+                '66e4443f003bfa937d45',
+                '66e58919001f63dd5d2f',
+                profileDocumentId,
+                { balance: depositAmount }
+            );
+
             const transactionData = {
                 userId,
                 type: 'deposit',
@@ -56,24 +60,12 @@ const Deposit = () => {
                 status: "successfull",
                 date: new Date().toISOString(),
             };
-
-            // Add the deposit transaction to the transactions collection
             const response = await db.transactions.create(transactionData);
-            console.log('Deposit successful:', transactionData);
-            //   updating user ballance
-
-            // Step 3: Update the balance in the profile document
-            await databases.updateDocument(
-                '66e4443f003bfa937d45',                // Your database ID
-                '66e58919001f63dd5d2f',                // Your profile collection ID
-                profileDocumentId,                     // The document ID of the user's profile
-                { balance: depositAmount }             // Field to update (e.g., updating the balance)
-            );
             resetForm();
+            return setErrorMessage("Deposited Successfully");
 
         } catch (err) {
             setErrorMessage(err.message);
-            console.log(err)
         } finally {
             setSubmitting(false);
         }
