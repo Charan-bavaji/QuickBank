@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.grass-effect {
+  background: url("https://example.com/grass-texture.jpg") repeat;
+  background-size: cover;
+  border-radius: 8px; /* Optional: For rounded corners */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); /* Optional: For a subtle shadow */
+  padding: 16px; /* Optional: Adjust padding as needed */
+  height: 200px; /* Adjust height based on your needs */
+  width: 300px; /* Adjust width based on your needs */
+}

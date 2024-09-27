@@ -1,0 +1,42 @@
+transactionId	        string	    A unique ID for each transaction (use Appwrite's auto-generated ID or a custom format).	Yes
+userId	                string	    The ID of the user initiating the transaction (from Appwrite's account.get() for the logged-in user).	Yes
+recipientUserId	        string	    The ID of the recipient (only used in case of transfers). Set to null for deposits/withdrawals.	No
+type	                string	    The type of transaction: can be deposit, withdraw, or transfer.	Yes
+amount	                float	    The amount of money involved in the transaction.	Yes
+description	            string	    A short description of the transaction (e.g., "Deposit from bank account" or "Transfer to John").	Yes
+date	                datetime	The date and time the transaction was initiated (use new Date().toISOString() to store current timestamp).	Yes
+status	                string	    The status of the transaction (e.g., pending, completed, failed).	Yes
+balanceBefore	        float	    The account balance before the transaction.	Yes
+balanceAfter	        float	    The account balance after the transaction.	Yes
+accountNumber	        string	    The user's account number who initiated the transaction (from the profile collection).	Yes
+recipientAccountNumber	string	    The recipient's account number for transfers. Set to null for deposit/withdraw.	Nos
+
+deposit payload..
+{
+    "transactionId": "unique_transaction_id_1",
+    "userId": "userId_123",
+    "recipientUserId": null,
+    "type": "deposit",
+    "amount": 100.0,
+    "description": "Salary deposit",
+    "date": "2024-09-14T10:00:00Z",
+    "status": "completed",
+    "balanceBefore": 500.0,
+    "balanceAfter": 600.0,
+    "accountNumber": "ACC123456"
+}
+
+transfer payload..
+{
+    "transactionId": "unique_transaction_id_2",
+    "userId": "userId_123",
+    "recipientUserId": null,
+    "type": "withdraw",
+    "amount": 50.0,
+    "description": "ATM withdrawal",
+    "date": "2024-09-14T12:00:00Z",
+    "status": "completed",
+    "balanceBefore": 600.0,
+    "balanceAfter": 550.0,
+    "accountNumber": "ACC123456"
+}
