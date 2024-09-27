@@ -27,9 +27,9 @@ const App = () => {
         setLoggedInUser(user);
         // Check if the user has a label that marks them as admin
         // Assuming user.labels is where Appwrite stores the labels. Adjust if necessary.
-        const isAdmin = user.labels?.includes('admin');
-        console.log(isAdmin);
-        setUserRole(isAdmin ? 'admin' : 'user');
+        // const isAdmin = user.labels?.includes('admin');
+        // console.log(isAdmin);
+        // setUserRole(isAdmin ? 'admin' : 'user');
       } catch (error) {
         setLoggedInUser(null); // If no session, set to null
       } finally {
@@ -52,30 +52,34 @@ const App = () => {
         <Route
           path="/"
           element={
-            loggedInUser ? (
-              userRole === 'admin' ? (
-                <Navigate to="/admin-dashboard" />
+            loggedInUser ?
+              (
+                //   userRole === 'admin' ? (
+                //     <Navigate to="/admin-dashboard" />
+                //   ) :
+                (
+                  <Navigate to="/dashboard" />
+                )
               ) : (
-                <Navigate to="/dashboard" />
+                <Navigate to="/login" />
               )
-            ) : (
-              <Navigate to="/login" />
-            )
           }
         />
 
         <Route
           path="/login"
           element={
-            loggedInUser ? (
-              userRole === 'admin' ? (
-                <Navigate to="/admin-dashboard" />
+            loggedInUser ?
+              (
+                // userRole === 'admin' ? (
+                //   <Navigate to="/admin-dashboard" />
+                // ) : 
+                (
+                  <Navigate to="/dashboard" />
+                )
               ) : (
-                <Navigate to="/dashboard" />
+                <Login setLoggedInUser={setLoggedInUser} />
               )
-            ) : (
-              <Login setLoggedInUser={setLoggedInUser} />
-            )
           }
         />
 
@@ -88,11 +92,14 @@ const App = () => {
         <Route
           path="/dashboard"
           element={
-            loggedInUser && userRole === 'user' ? (
-              <UserDashboard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            loggedInUser
+              // && userRole === 'user'
+              ? (
+                <UserDashboard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
+                // <Profile />
+              ) : (
+                <Navigate to="/login" />
+              )
           }
         >
           <Route path='/dashboard/profile' element={<Profile />} />
