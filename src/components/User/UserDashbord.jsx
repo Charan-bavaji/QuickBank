@@ -4,8 +4,9 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar';
 import { Query } from 'appwrite';
 import { Toast } from 'flowbite-react';
-import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
-
+import { HiX } from "react-icons/hi";
+import { Avatar } from "flowbite-react";
+import avathar from "../../assets/wallpaperflare.com_wallpaper (57).jpg"
 const UserDashboard = ({ loggedInUser, setLoggedInUser }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -64,11 +65,12 @@ const UserDashboard = ({ loggedInUser, setLoggedInUser }) => {
     }
 
     return (
-        <div className="w-full h-[100vh] flex justify-center items-center bg-[#181C14] text-white">
-            <section className="relative flex w-[90%] h-[90%] rounded-2xl overflow-hidden bg-[#1f1f1f] border-[1px] border-[#697565]">
+        <div className="w-full h-[100vh] flex justify-center items-center bg-gradient-to-tr from-[#404147] to-[#3f4047] text-[#c4c5cc]">
+            {/* #404147 #3f4047 */}
+            <section className="relative flex w-[90%] h-[90%] rounded-2xl overflow-hidden bg-[#141518] border-[1px] border-gray-600">
                 <Sidebar user={user} />  {/* Pass user data to Sidebar */}
-                <div className="w-full">
-                    <div className="w-full h-[5rem] border-b-2 border-[#697565]">
+                <div className="w-full "> {/*//add overflow scrool here*/}
+                    <div className="w-full h-[4rem] ">
                         {loggedInUser ? (
                             <section className="flex justify-between items-center px-2">
                                 <div className=' pl-3'>
@@ -76,12 +78,15 @@ const UserDashboard = ({ loggedInUser, setLoggedInUser }) => {
                                     <p>Manage your banking activities here.</p>
                                 </div>
 
-                                <div className="relative py-2 group">
+                                <div className="relative py-2 group flex justify-between w-[5rem]">
+                                    <div>
+                                        <Avatar img={avathar} alt="avatar" rounded />
+                                    </div>
                                     <button className="bg-red-500  rounded-lg" onClick={handleLogout}><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
                                     </svg>
+                                        <h1 className='absolute hidden right-1 group-hover:flex'>logout</h1>
                                     </button>
-                                    <h1 className='absolute hidden right-1 group-hover:flex'>logout</h1>
                                 </div>
                             </section>
                         ) : (

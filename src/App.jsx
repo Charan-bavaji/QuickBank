@@ -14,6 +14,8 @@ import SignUp from './pages/SignUp';
 import RecentTransaction from "./components/Admin/RecentTransaction"
 import AllUsers from './components/Admin/AllUsers';
 import Home from './pages/Home';
+
+
 const App = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [userRole, setUserRole] = useState('user');  // Default to 'user'
@@ -112,16 +114,18 @@ const App = () => {
         <Route
           path="/admin-dashboard"
           element={
-            loggedInUser && userRole === 'admin' ? (
-              <AdminDashboard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            loggedInUser
+              //  && userRole === 'admin'
+              ?
+              (
+                <AdminDashboard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
+              ) : (
+                <Navigate to="/login" />
+              )
           }
         >
-          <Route path='/admin-dashboard/' element={<RecentTransaction />} />
-          <Route path='/admin-dashboard/allusers' element={<AllUsers />} />
-
+          <Route path='/admin-dashboard/' element={<AllUsers/>} />
+          <Route path='/admin-dashboard/alltransactions' element={<RecentTransaction />} />
         </Route>
       </Routes>
     </Router>

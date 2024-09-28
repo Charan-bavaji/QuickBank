@@ -1,23 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import home from '../../assets/home.png'
+import transactions from '../../assets/arrow_10436867.png'
 
 const AdminSidebar = () => {
     return (
-        <div className="w-64 h-full bg-gray-800 text-white">
-            <ul className="space-y-6 p-6">
-
-                <li>
-                    <Link to="/admin-dashboard/" className="hover:text-gray-300">
-                        Recent Transactions
+        <div className="w-auto h-full  text-black bg-[#202127]">
+            <div className=''>
+                <div className='h-[5rem]'>
+                </div>
+                <ul className=" w-full flex flex-col ">
+                    <Link to="/admin-dashboard/" className="">
+                        <li className=' w-full text-center py-4 px-5 text-xl border-b-2 border-gray-600 hover:bg-gray-600  '>
+                            <img src={home} alt='deposit' width={30} />
+                        </li>
                     </Link>
-                </li>
-                <li>
-                    <Link to="/admin-dashboard/allusers" className="hover:text-gray-300">
-                        All Users
+                    <Link to="/admin-dashboard/alltransactions" className="">
+                        <li className=' w-full text-center py-4 px-5 text-xl  border-b-2 border-gray-600 hover:bg-gray-600  '>
+                            <img src={transactions} alt='deposit' width={30} />
+                        </li>
                     </Link>
-                </li>
-
-            </ul>
+                </ul>
+            </div>
         </div>
     )
 }

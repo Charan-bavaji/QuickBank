@@ -39,24 +39,36 @@ const RecentTransaction = () => {
   };
 
   return (
-    <div>
-      <h2>Recent Transactions</h2>
-      <ul>
-        {transactions.map((transaction) => (
-          <li key={transaction.$id}>
-            {transaction.description} - ${transaction.amount}
-          </li>
-        ))}
-      </ul>
-      <div>
-        <button onClick={handlePreviousPage} disabled={page === 1}>
-          Previous
-        </button>
-        <span>Page {page} of {totalPages}</span>
-        <button onClick={handleNextPage} disabled={page === totalPages}>
-          Next
-        </button>
-      </div>
+    <div className="max-[90%] h-[34rem] p-2 mx-10 bg-[#202127] rounded-lg shadow-md overflow-y-scroll ">
+      <h1 className="text-2xl font-semibold m-4">Your Transactions</h1>
+      {transactions.length === 0 ? (
+        <div>No transactions found.</div>
+      ) : (
+        <table className="min-w-full table-auto border-black">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Date</th>
+              <th className="px-4 py-2">Type</th>
+              <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2">Balance Before</th>
+              <th className="px-4 py-2">Balance After</th>
+              <th className="px-4 py-2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactions.map(transaction => (
+              <tr key={transaction.$id}>
+                <td className="border px-4 py-2">{new Date(transaction.date).toLocaleDateString()}</td>
+                <td className="border px-4 py-2">{transaction.type}</td>
+                <td className="border px-4 py-2">{transaction.amount}</td>
+                <td className="border px-4 py-2">{!transaction.balanceBefore ? "null" : transaction.balanceBefore}</td>
+                <td className="border px-4 py-2">{!transaction.balanceAfter ? "null" : transaction.balanceAfter}</td>
+                <td className="border px-4 py-2">{transaction.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

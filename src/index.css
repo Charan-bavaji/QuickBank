@@ -10,3 +10,22 @@
   height: 200px; /* Adjust height based on your needs */
   width: 300px; /* Adjust width based on your needs */
 }
+::-webkit-scrollbar {
+  width: 6px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #141518; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Thumb color on hover */
+}
+.backgroundimage{
+  background-image: url('./assets//310506297_33aa7dae-6bb9-467e-af19-a05caf2419f9.jpg');
+}

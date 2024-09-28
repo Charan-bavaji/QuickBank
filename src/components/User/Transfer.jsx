@@ -134,7 +134,7 @@ const Transfer = () => {
 
             <form onSubmit={handleTransfer}>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Recipient Account Number</label>
+                    <label className="block text-sm font-medium ">Recipient Account Number</label>
                     <input
                         type="text"
                         value={recipientAccountNumber}
@@ -143,9 +143,19 @@ const Transfer = () => {
                         required
                     />
                 </div>
+                <div>
+                    <label className="block text-sm font-medium ">Pin</label>
+                    <input
+                        type="number"
+                        value={recipientAccountNumber}
+                        onChange={(e) => setRecipientAccountNumber(e.target.value)}
+                        className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md"
+                        required
+                    />
+                </div>
 
                 <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">Amount</label>
+                    <label className="block text-sm font-medium ">Amount</label>
                     <input
                         type="number"
                         value={amount}

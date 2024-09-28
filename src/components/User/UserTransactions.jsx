@@ -50,8 +50,8 @@ const UserTransactions = () => {
     if (loading) return <div>Loading transactions...</div>;
     if (error) return <div>{error}</div>;
     return (
-        <div className="max-[90%] h-[34rem] mx-auto p-6 backdrop-blur-sm bg-white/10 rounded-lg shadow-md overflow-scroll">
-            <h1 className="text-2xl font-semibold mb-4">Your Transactions</h1>
+        <div className="max-[90%] h-[34rem] p-2 mx-10 bg-[#202127] rounded-lg shadow-md overflow-y-scroll ">
+            <h1 className="text-2xl font-semibold m-4">Your Transactions</h1>
             {transactions.length === 0 ? (
                 <div>No transactions found.</div>
             ) : (

@@ -41,13 +41,17 @@ const Withdraw = () => {
     }, []);
 
     const initialValues = {
-        withdrawAmount: ''
+        withdrawAmount: '',
+        pin: ''
     };
 
     const validationSchema = Yup.object({
         withdrawAmount: Yup.number()
             .min(1, 'Withdrawal amount must be greater than 0')
-            .required('Withdrawal amount is required')
+            .required('Withdrawal amount is required'),
+        pin: Yup.number()
+            .min(1, 'Withdrawal amount must be greater than 0')
+            .required('Pin is required'),
     });
 
     const onSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -122,14 +126,24 @@ const Withdraw = () => {
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
                         <div>
-                            <label htmlFor="withdrawAmount" className="block text-sm font-medium text-gray-700">Withdraw Amount</label>
+                            <label htmlFor="withdrawAmount" className="block text-sm font-medium ">Withdraw Amount</label>
                             <Field
                                 type="number"
                                 id="withdrawAmount"
                                 name="withdrawAmount"
-                                className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md"
+                                className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md focus:outline-none focus:ring-0"
                             />
                             <ErrorMessage name="withdrawAmount" component="div" className="text-red-500 text-sm mt-1" />
+                        </div>
+                        <div>
+                            <label htmlFor="pin" className="block text-sm font-medium ">Enter Pin</label>
+                            <Field
+                                type="number"
+                                id="pin"
+                                name="pin"
+                                className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md focus:outline-none focus:ring-0"
+                            />
+                            <ErrorMessage name="pin" component="div" className="text-red-500 text-sm mt-1" />
                         </div>
 
                         <div>

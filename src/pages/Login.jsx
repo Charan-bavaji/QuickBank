@@ -20,7 +20,7 @@ const Login = ({ setLoggedInUser }) => {
                 // Navigate based on user label (admin or user)
                 const isAdmin = user.labels?.includes('admin');
                 console.log(isAdmin);
-                navigate(isAdmin ? '/admin-dashboard' : '/dashboard');
+                navigate(isAdmin ? '/admin-dashboard' : '/dashboard/profile');
             } catch (error) {
                 setLoggedInUser(null); // If no session, set to null
             } finally {

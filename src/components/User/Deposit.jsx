@@ -84,7 +84,7 @@ const Deposit = () => {
                         <Form className="space-y-4">
 
                             <div>
-                                <label htmlFor="depositAmount" className="block text-sm font-medium text-gray-700">Deposit Amount</label>
+                                <label htmlFor="depositAmount" className="block text-sm font-medium ">Deposit Amount</label>
                                 <Field
                                     type="number"
                                     id="depositAmount"
@@ -95,7 +95,7 @@ const Deposit = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                                <label htmlFor="description" className="block text-sm font-medium ">Description</label>
                                 <Field
                                     type="textarea"
                                     id="description"
