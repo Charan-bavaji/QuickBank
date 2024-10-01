@@ -35,7 +35,7 @@ const UserDashboard = ({ loggedInUser, setLoggedInUser }) => {
                     setBalance(userProfile.balance);  // Set balance if it's part of user profile
                 } else {
                     setError('No profile found. Please create a profile.');
-                    navigate('/dashboard/profile');  // Redirect to profile creation if no profile found
+                    navigate('/dashboard');  // Redirect to profile creation if no profile found
                 }
             } catch (err) {
                 console.error('Error fetching user data:', err);
@@ -78,14 +78,15 @@ const UserDashboard = ({ loggedInUser, setLoggedInUser }) => {
                                     <p>Manage your banking activities here.</p>
                                 </div>
 
-                                <div className="relative py-2 group flex justify-between w-[5rem]">
+                                <div className="relative py-2 group flex justify-between gap-7">
                                     <div>
                                         <Avatar img={avathar} alt="avatar" rounded />
                                     </div>
-                                    <button className="bg-red-500  rounded-lg" onClick={handleLogout}><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
-                                    </svg>
-                                        <h1 className='absolute hidden right-1 group-hover:flex'>logout</h1>
+                                    <button className="bg-red-500 px-2  rounded-lg" onClick={handleLogout}>
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+                                        </svg>
+                                        <h1 className='absolute hidden right-1 -bottom-4 group-hover:flex'>logout</h1>
                                     </button>
                                 </div>
                             </section>

@@ -47,23 +47,23 @@ const RecentTransaction = () => {
         <table className="min-w-full table-auto border-black">
           <thead>
             <tr>
-              <th className="px-4 py-2">Date</th>
-              <th className="px-4 py-2">Type</th>
-              <th className="px-4 py-2">Amount</th>
-              <th className="px-4 py-2">Balance Before</th>
-              <th className="px-4 py-2">Balance After</th>
-              <th className="px-4 py-2">Description</th>
+              <th className="px-4 border py-2 border-gray-400">Date</th>
+              <th className="px-4 border py-2 border-gray-400">Type</th>
+              <th className="px-4 border py-2 border-gray-400">Amount</th>
+              <th className="px-4 border py-2 border-gray-400">Balance Before</th>
+              <th className="px-4 border py-2 border-gray-400">Balance After</th>
+              <th className="px-4 border py-2 border-gray-400">Description</th>
             </tr>
           </thead>
           <tbody>
             {transactions.map(transaction => (
               <tr key={transaction.$id}>
-                <td className="border px-4 py-2">{new Date(transaction.date).toLocaleDateString()}</td>
-                <td className="border px-4 py-2">{transaction.type}</td>
-                <td className="border px-4 py-2">{transaction.amount}</td>
-                <td className="border px-4 py-2">{!transaction.balanceBefore ? "null" : transaction.balanceBefore}</td>
-                <td className="border px-4 py-2">{!transaction.balanceAfter ? "null" : transaction.balanceAfter}</td>
-                <td className="border px-4 py-2">{transaction.description}</td>
+                <td className="border px-4 py-2 border-gray-700">{new Date(transaction.date).toLocaleDateString()}</td>
+                <td className="border px-4 py-2 border-gray-700">{transaction.type}</td>
+                <td className="border px-4 py-2 border-gray-700">{transaction.amount}</td>
+                <td className="border px-4 py-2 border-gray-700">{!transaction.balanceBefore ? "null" : transaction.balanceBefore}</td>
+                <td className="border px-4 py-2 border-gray-700">{!transaction.balanceAfter ? "null" : transaction.balanceAfter}</td>
+                <td className="border px-4 py-2 border-gray-700">{transaction.description}</td>
               </tr>
             ))}
           </tbody>

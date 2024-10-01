@@ -6,6 +6,7 @@ import NoProfile from '../NoProfile';
 const Transfer = () => {
     const [user, setUser] = useState(null);
     const [recipientAccountNumber, setRecipientAccountNumber] = useState('');
+    const [pin, setPin] = useState('');
     const [amount, setAmount] = useState(0);
     const [balance, setBalance] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -38,6 +39,7 @@ const Transfer = () => {
                 setError('Error loading profile data.');
             } finally {
                 setLoading(false);
+
             }
         };
 
@@ -147,8 +149,8 @@ const Transfer = () => {
                     <label className="block text-sm font-medium ">Pin</label>
                     <input
                         type="number"
-                        value={recipientAccountNumber}
-                        onChange={(e) => setRecipientAccountNumber(e.target.value)}
+                        value={pin}
+                        onChange={(e) => setPin(e.target.value)}
                         className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md"
                         required
                     />

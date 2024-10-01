@@ -104,7 +104,7 @@ const App = () => {
               )
           }
         >
-          <Route path='/dashboard/profile' element={<Profile />} />
+          <Route path='/dashboard' element={<Profile />} />
           <Route path='/dashboard/deposit' element={<Deposit />} />
           <Route path='/dashboard/transfer' element={<Transfer />} />
           <Route path='/dashboard/withdraw' element={<Withdraw />} />

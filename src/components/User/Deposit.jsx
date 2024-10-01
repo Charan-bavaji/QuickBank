@@ -10,10 +10,12 @@ import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
 const Deposit = () => {
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [success, setSuccess] = useState(null);
     // Initial form values
     const initialValues = {
         depositAmount: '',
         description: '',
+        pin: ''
     };
 
     // Validation schema for the form using Yup
@@ -23,11 +25,12 @@ const Deposit = () => {
             .required('Deposit amount is required'),
         description: Yup.string()
             .required('Description is required'),
+        pin: Yup.string()
+            .matches(/^\d{6}$/, 'PIN must be exactly 6 digits')
+            .required('PIN is required'),
     });
     // Form submission handler
     const onSubmit = async (values, { setSubmitting, resetForm }) => {
-        const depositAmount = values.depositAmount;
-        console.log(depositAmount);
         try {
             const user = await account.get();
             const userId = user.$id;
@@ -45,6 +48,12 @@ const Deposit = () => {
             if (!profile1) {
                 return setErrorMessage("Create your profile");
             }
+            const balancebefore = profile1.balance;
+            const depositAmount = profile1.balance + values.depositAmount;
+            const pin = profile1.pin;
+            if (pin != values.pin) {
+                return setErrorMessage("invalid pin");
+            }
             await databases.updateDocument(
                 '66e4443f003bfa937d45',
                 '66e58919001f63dd5d2f',
@@ -59,10 +68,12 @@ const Deposit = () => {
                 description: values.description,
                 status: "successfull",
                 date: new Date().toISOString(),
+                balanceBefore: balancebefore,
+                balanceAfter: depositAmount
             };
             const response = await db.transactions.create(transactionData);
             resetForm();
-            return setErrorMessage("Deposited Successfully");
+            return setSuccess("Deposited Successfully");
 
         } catch (err) {
             setErrorMessage(err.message);
@@ -89,6 +100,7 @@ const Deposit = () => {
                                     type="number"
                                     id="depositAmount"
                                     name="depositAmount"
+                                    placeholder="enter amount"
                                     className="mt-1 block w-full p-2 border border-gray-700 rounded-md  bg-inherit"
                                 />
                                 <ErrorMessage name="depositAmount" component="div" className="text-red-500 text-sm mt-1" />
@@ -100,9 +112,15 @@ const Deposit = () => {
                                     type="textarea"
                                     id="description"
                                     name="description"
+                                    placeholder="description"
                                     className="mt-1 block w-full bg-inherit p-2 border border-gray-700 rounded-md"
                                 />
                                 <ErrorMessage name="description" component="div" className="text-red-500 text-sm mt-1" />
+                            </div>
+                            <div>
+                                <label htmlFor="pin" className="block text-sm font-medium ">Enter a Pin</label>
+                                <Field type="text" id="pin" name="pin" placeholder="enter a pin" className="mt-1 block w-full bg-inherit p-2 border border-gray-700 rounded-md" />
+                                <ErrorMessage name="pin is required" component="div" className="text-red-500 text-sm mt-1" />
                             </div>
                             <div>
                                 <button
@@ -118,6 +136,17 @@ const Deposit = () => {
                 </Formik>
             </div>
             <div className=' absolute top-10 right-10'>
+
+                {
+                    success &&
+                    <Toast>
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                            <HiCheck className="h-5 w-5" />
+                        </div>
+                        <div className="ml-3 text-sm font-normal">{success}</div>
+                        <Toast.Toggle />
+                    </Toast>
+                }
                 {
                     errorMessage &&
                     <Toast>

@@ -1,12 +1,13 @@
 import React from 'react'
 import { Avatar, AvatarGroup } from 'flowbite-react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 const Home = () => {
     return (
         <div className='bg-black w-full h-[100vh] backgroundimage bg-cover'>
             <section className='w-full'>
                 <div className='w-full flex justify-between p-5'>
-                    <section className='text-white'>logo</section>
+                    <section className='text-white flex justify-center items-center'><img src={logo} alt="logo" width={80} className='rounded-xl' /></section>
                     <section class="space-x-4">
                         <Link to={'/login'}>
                             <button class="px-6 py-2 rounded-full border border-gray-500 text-white bg-transparent hover:bg-gray-800">
@@ -61,7 +62,7 @@ const Home = () => {
                                 <Avatar img="https://randomuser.me/api/portraits/men/35.jpg" rounded />
                             </AvatarGroup>
                             <p className="text-gray-300">
-                                Trusted by over <span className="font-semibold">+20K</span> people in Europe.
+                                Trusted by over <span className="font-semibold">+20K</span> people in India.
                             </p>
                         </div>
                     </div>

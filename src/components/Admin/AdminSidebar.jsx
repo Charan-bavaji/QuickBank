@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import home from '../../assets/home.png'
-import transactions from '../../assets/arrow_10436867.png'
+import transactions from '../../assets/left-and-right-arrows.png'
 
 const AdminSidebar = () => {
     return (

@@ -22,7 +22,6 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [transactions, setTransactions] = useState([]);
 
-
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
@@ -60,7 +59,7 @@ const Profile = () => {
         };
 
         fetchUserProfile();
-    }, []);
+    }, [profile]);
 
     if (loading) {
         // Show a loader while fetching profile
@@ -83,11 +82,11 @@ const Profile = () => {
                                         <section className=' flex gap-4 px-6'>
                                             <div className='w-[10rem] h-[5rem] py-1 bg-gradient-to-r from-slate-900 to-black rounded-xl text-center shadow-2xl'>
                                                 <h1 className='text-xl'>Ballance</h1>
-                                                <h1 className='text-xl font-semibold'> ₹12000</h1>
+                                                <h1 className='text-xl font-semibold'> ₹{profile.balance}</h1>
                                             </div>
                                             <div className='w-[10rem] h-[5rem] py-1  bg-gradient-to-r from-slate-900 to-black rounded-xl text-center shadow-2xl'>
                                                 <h1 className='text-xl'>AC Number</h1>
-                                                <h1 className='text-lg font-semibold'>ACC5456853978</h1>
+                                                <h1 className='text-base font-semibold'>{profile.accountNumber}</h1>
                                             </div>
                                         </section>
                                         <section className=' w-full my-8 flex justify-center items-center'>
@@ -95,7 +94,7 @@ const Profile = () => {
                                         </section>
                                         <section className='w-full flex justify-center items-center'>
                                             <div className="w-[20rem] h-[8rem]">
-                                                <Carousel slide={true} indicators={false} leftControl=" " rightControl=" ">
+                                                <Carousel slide={true} leftControl=" " rightControl=" ">
                                                     <img
                                                         src={img3}
                                                         alt="Image 1"
@@ -133,10 +132,10 @@ const Profile = () => {
                                             {
                                                 transactions.map((transaction) => (
                                                     <div className='flex justify-between py-2 border-b-[1px] border-gray-700'>
-                                                        <h1>{transaction.description}</h1>
+                                                        <h1 className='w-[5rem]'>{transaction.description}</h1>
                                                         <h1>{new Date(transaction.date).toLocaleDateString()}</h1>
                                                         <h1>{transaction.type}</h1>
-                                                        <h1>{transaction.amount}</h1>
+                                                        <h1 className='text-green-500'>{transaction.amount}</h1>
                                                     </div>
                                                 ))
                                             }

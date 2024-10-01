@@ -26,7 +26,7 @@ const SignUp = ({ login }) => {
             await account.createEmailPasswordSession(email, password);
             await account.get();
             setLoading(false)
-            return navigate('/dashboard/profile');
+            return navigate('/dashboard');
 
         } catch (error) {
             setLoading(false);

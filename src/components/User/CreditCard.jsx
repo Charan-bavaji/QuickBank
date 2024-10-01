@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 const CreditCard = () => {
     return (
         <div className="w-[20rem]">
@@ -36,7 +36,9 @@ const CreditCard = () => {
                 </div>
             </div>
             <div className="mt-6 flex justify-between">
-                <button className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-400     text-white rounded-md">Transfer Funds</button>
+                <Link to={'transfer'}>
+                    <button className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-400     text-white rounded-md">Transfer Funds</button>
+                </Link>
                 <button className="px-4 py-2 bg-inherit  text-blue-800  rounded-md font-bold border-2 border-blue-800 text-sm hover:bg-blue-600 hover:text-white">Add Card</button>
             </div>
         </div>
