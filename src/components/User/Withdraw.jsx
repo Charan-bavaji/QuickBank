@@ -5,11 +5,14 @@ import { databases, account } from '../../appwrite/config';  // Your Appwrite co
 import { Query } from 'appwrite';
 import db from '../../appwrite/databases';
 import NoProfile from '../NoProfile';
-
+import Loading from '../Loading';
+import { Toast } from "flowbite-react";
+import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
 const Withdraw = () => {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -27,16 +30,15 @@ const Withdraw = () => {
                 if (profileResponse.documents.length > 0) {
                     setProfile(profileResponse.documents[0]);
                 } else {
-                    setError('Profile not found.');
+                    setErrorMessage('Profile not found.');
                 }
             } catch (err) {
                 console.error('Error fetching profile:', err);
-                setError('Failed to fetch profile.');
+                setErrorMessage('Failed to fetch profile.');
             } finally {
                 setLoading(false);
             }
         };
-
         fetchUserProfile();
     }, []);
 
@@ -49,9 +51,9 @@ const Withdraw = () => {
         withdrawAmount: Yup.number()
             .min(1, 'Withdrawal amount must be greater than 0')
             .required('Withdrawal amount is required'),
-        pin: Yup.number()
-            .min(1, 'Withdrawal amount must be greater than 0')
-            .required('Pin is required'),
+        pin: Yup.string()
+            .matches(/^\d{6}$/, 'PIN must be exactly 6 digits')
+            .required('PIN is required'),
     });
 
     const onSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -61,17 +63,19 @@ const Withdraw = () => {
 
             // Check if the profile is available
             if (!profile) {
-                setError('User profile not found');
+                setErrorMessage('User profile not found');
                 setSubmitting(false);
                 return;
             }
-
+            if (profile.pin != values.pin) {
+                return setErrorMessage('invalid pin');
+            }
             // Validate if user has enough balance
             const balanceBefore = profile.balance;
             const withdrawAmount = parseFloat(values.withdrawAmount);
 
             if (withdrawAmount > balanceBefore) {
-                setError('Insufficient balance for withdrawal.');
+                setErrorMessage('Insufficient balance for withdrawal.');
                 setSubmitting(false);
                 return;
             }
@@ -101,9 +105,9 @@ const Withdraw = () => {
             };
 
             const response = await db.transactions.create(transactionData);
-            console.log('Withdrawal successful:', transactionData);
+            setSuccess('WithDraw succfully')
             resetForm();
-            setError(null);
+            setErrorMessage(null);
 
         } catch (err) {
             console.error('Error during withdrawal:', err);
@@ -112,53 +116,79 @@ const Withdraw = () => {
             setSubmitting(false);
         }
     };
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    if (loading) return <div><Loading /></div>
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6  rounded-lg shadow-md backdrop-blur-sm bg-white/10">
-            <h1 className="text-2xl font-semibold mb-4">Withdraw Funds</h1>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-            >
-                {({ isSubmitting }) => (
-                    <Form className="space-y-4">
-                        <div>
-                            <label htmlFor="withdrawAmount" className="block text-sm font-medium ">Withdraw Amount</label>
-                            <Field
-                                type="number"
-                                id="withdrawAmount"
-                                name="withdrawAmount"
-                                className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md focus:outline-none focus:ring-0"
-                            />
-                            <ErrorMessage name="withdrawAmount" component="div" className="text-red-500 text-sm mt-1" />
-                        </div>
-                        <div>
-                            <label htmlFor="pin" className="block text-sm font-medium ">Enter Pin</label>
-                            <Field
-                                type="number"
-                                id="pin"
-                                name="pin"
-                                className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md focus:outline-none focus:ring-0"
-                            />
-                            <ErrorMessage name="pin" component="div" className="text-red-500 text-sm mt-1" />
-                        </div>
+        <div>
 
-                        <div>
-                            <button
-                                type="submit"
-                                className="w-full bg-black text-white py-2 px-4  rounded-md hover:bg-black"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Processing...' : 'Withdraw'}
-                            </button>
+            <div className="max-w-md mx-auto mt-10 p-6  rounded-lg shadow-md backdrop-blur-sm bg-white/10">
+                <h1 className="text-2xl font-semibold mb-4">Withdraw Funds</h1>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                >
+                    {({ isSubmitting }) => (
+                        <Form className="space-y-4">
+                            <div>
+                                <label htmlFor="withdrawAmount" className="block text-sm font-medium ">Withdraw Amount</label>
+                                <Field
+                                    type="number"
+                                    id="withdrawAmount"
+                                    name="withdrawAmount"
+                                    className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md focus:outline-none focus:ring-0"
+                                />
+                                <ErrorMessage name="withdrawAmount" component="div" className="text-red-500 text-sm mt-1" />
+                            </div>
+                            <div>
+                                <label htmlFor="pin" className="block text-sm font-medium ">Enter Pin</label>
+                                <Field
+                                    type="number"
+                                    id="pin"
+                                    name="pin"
+                                    className="mt-1 block w-full p-2 border border-gray-700 bg-inherit rounded-md focus:outline-none focus:ring-0"
+                                />
+                                <ErrorMessage name="pin" component="div" className="text-red-500 text-sm mt-1" />
+                            </div>
+
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="w-full bg-black text-white py-2 px-4  rounded-md hover:bg-black"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Processing...' : 'Withdraw'}
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+            <div className=' absolute top-10 right-10'>
+
+                {
+                    success &&
+                    <Toast>
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                            <HiCheck className="h-5 w-5" />
                         </div>
-                    </Form>
-                )}
-            </Formik>
+                        <div className="ml-3 text-sm font-normal">{success}</div>
+                        <Toast.Toggle />
+                    </Toast>
+                }
+                {
+                    errorMessage &&
+                    <Toast>
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                            <HiX className="h-5 w-5" />
+                        </div>
+                        <div className="ml-3 text-sm font-normal">{errorMessage}</div>
+                        <Toast.Toggle />
+                    </Toast>
+                }
+            </div>
         </div>
+
     );
 };
 

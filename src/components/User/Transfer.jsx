@@ -3,24 +3,25 @@ import { account, databases } from '../../appwrite/config';  // Import Appwrite 
 import { Query } from 'appwrite';
 import db from '../../appwrite/databases';
 import NoProfile from '../NoProfile';
+import Loading from '../Loading';
 const Transfer = () => {
     const [user, setUser] = useState(null);
     const [recipientAccountNumber, setRecipientAccountNumber] = useState('');
-    const [pin, setPin] = useState('');
+    const [pin, setPin] = useState(null);
     const [amount, setAmount] = useState(0);
     const [balance, setBalance] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [success, setSuccess] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                // Step 1: Get the current logged-in user
+                //  Get the current logged-in user
                 const userData = await account.get();  // Fetch the logged-in user
                 const userId = userData.$id;
 
-                // Step 2: Fetch the user's profile to get their balance and account number
+                // Fetch the user's profile to get their balance and account number
                 const profileResponse = await databases.listDocuments(
                     '66e4443f003bfa937d45',             // Replace with your database ID
                     '66e58919001f63dd5d2f',    // Replace with your profile collection ID
@@ -36,7 +37,7 @@ const Transfer = () => {
                 }
             } catch (err) {
                 console.error('Error fetching user data:', err);
-                setError('Error loading profile data.');
+                setErrorMessage('Error loading profile data.');
             } finally {
                 setLoading(false);
 
@@ -49,11 +50,11 @@ const Transfer = () => {
     const handleTransfer = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
+        setErrorMessage(null);
         setSuccess(null);
 
         try {
-            // Step 3: Fetch the recipient's profile using their account number
+            // Fetch the recipient's profile using their account number
             const recipientResponse = await databases.listDocuments(
                 '66e4443f003bfa937d45',                // Replace with your database ID
                 '66e58919001f63dd5d2f',       // Replace with your profile collection ID
@@ -66,7 +67,13 @@ const Transfer = () => {
 
             const recipientProfile = recipientResponse.documents[0];
             const recipientID = recipientProfile.$id;
-            // Step 4: Check if the user has enough balance
+            // Check for pin valididty
+
+            if (pin != user.pin) {
+                return setErrorMessage('invalid pin');
+            }
+
+            // Check if the user has enough balance
             if (amount <= 0 || amount > balance) {
                 throw new Error('Insufficient funds or invalid amount.');
             }
@@ -74,7 +81,7 @@ const Transfer = () => {
             const newSenderBalance = balance - amount;
             const newRecipientBalance = recipientProfile.balance + amount;
 
-            // Step 5: Update the sender's balance (the logged-in user)
+            //  Update the sender's balance (the logged-in user)
             await databases.updateDocument(
                 '66e4443f003bfa937d45',                // Replace with your database ID
                 '66e58919001f63dd5d2f',       // Replace with your profile collection ID
@@ -82,7 +89,7 @@ const Transfer = () => {
                 { balance: newSenderBalance }         // Update the sender's balance
             );
 
-            // Step 6: Update the recipient's balance
+            //  Update the recipient's balance
             await databases.updateDocument(
                 '66e4443f003bfa937d45',                // Replace with your database ID
                 '66e58919001f63dd5d2f',       // Replace with your profile collection ID
@@ -90,7 +97,7 @@ const Transfer = () => {
                 { balance: newRecipientBalance }      // Update the recipient's balance
             );
 
-            // Step 7: Record the transfer transaction for both sender and recipient
+            //  Record the transfer transaction for both sender and recipient
             const transferTransaction = {
                 type: 'transfer',
                 amount: amount,
@@ -120,18 +127,18 @@ const Transfer = () => {
             setBalance(newSenderBalance);  // Update sender's balance in the UI
         } catch (err) {
             console.error('Transfer failed:', err);
-            setError(err.message);
+            setErrorMessage(err.message);
         } finally {
             setLoading(false);
         }
     };
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div><Loading /></div>;
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md backdrop-blur-sm bg-white/10">
             <h1 className="text-2xl font-semibold mb-4">Transfer Money</h1>
 
-            {error && <div className="text-red-500 mb-4">{error}</div>}
+            {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
             {success && <div className="text-green-500 mb-4">{success}</div>}
 
             <form onSubmit={handleTransfer}>
