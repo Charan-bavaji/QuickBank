@@ -1,2 +1,12 @@
 ![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(431).png)
-
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(432).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(433).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(434).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(435).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(436).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(437).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(438).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(439).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%20(440).png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%202024-09-29%20111352.png)
+![ss](https://github.com/Charan-bavaji/QuickBank/blob/main/src/assets/Screenshot%202024-09-29%20111415.png)
